@@ -34,6 +34,19 @@ impl Default for Person {
 // Otherwise, then return an instantiated Person onject with the results
 impl From<&str> for Person {
     fn from(s: &str) -> Person {
+        match s.len() {
+            0 => Person::default(),
+            _ => {
+                let person: Vec<_> = s.split(",").collect();
+                let name: String = String::from(person[0]);
+                let age: Result<usize, _> = person[1].parse::<usize>();
+                match age {
+                    Ok(x) => Person{name: name, age: x},
+                    Err(x) => Person::default()
+                }
+                
+            }
+        }
     }
 }
 
